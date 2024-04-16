@@ -15,7 +15,8 @@ internal class Program
             //exclusive=true only allow requests from the same channel
             //autodelete=true - if subscriber is down, queue will be deleted
             channel.QueueDeclare("hello-queue", true, false, false);//if publisher haven't created the queue, you can create here
-            //global:true tek seferde verecegi sayi, butun subcscriberler icin toplam sayi, false yaparsan subscriber basina o kadar verir
+            //global:true total count for all consumers at once if the number =5 it gives 3 for the the first consumer and 2 for the ssecond one
+            //if it is false count per consumer, so if the number is 5 it gives 5 for firstconsumer 5 for second consumer
             channel.BasicQos(0, 1, false);
             var consumer = new EventingBasicConsumer(channel);
             //autoAck will remove the message from the queue
