@@ -15,19 +15,15 @@ internal class Program
             //durable=true keeps your query even comp restarts
             //exclusive=true only allow requests from the same channel
             //autodelete=true - if subscriber is down, queue will be deleted
-            channel.QueueDeclare("hello-queue", true, false, false);
+            string queueName = "GreetingQueue";
+            channel.QueueDeclare(queueName, true, false, false);
 
             Enumerable.Range(1, 50).ToList().ForEach(x => {
-
-
-
-                string message = $"hello Worldingen  {x}";
+                string message = $"Rabbit Message  {x}";
                 //you can send messages as byte[]
                 //so convert your message to byte[]
                 var messageBody = Encoding.UTF8.GetBytes(message);
-
-                channel.BasicPublish(string.Empty, "hello-queue", null, messageBody);
-
+                channel.BasicPublish(string.Empty, queueName, null, messageBody);
                 Console.WriteLine($"Message sent! : {message}" );
 
             });
